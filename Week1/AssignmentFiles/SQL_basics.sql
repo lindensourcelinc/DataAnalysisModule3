@@ -24,7 +24,15 @@ select distinct payment_method from orders;
 select name, city, state from stores;
 -- Q7) From orders, show order_id, status, and a computed column total_items
 --     that counts how many items are in each order.
-
+select o.order_id, 
+o.status,
+count(oi.quantity) as total_items
+from orders as o
+join order_items as oi 
+on o.order_id = oi.order_id
+group by 
+o.order_id, 
+o.status;
 -- Q8) Show orders placed on '2025-09-04' (any time that day).
 select * from orders where order_datetime between "2025-09-04 00:00:00" and  "2025-09-04 23:59:59";
 -- Q9) Return the top 3 most expensive products (price, name).
@@ -33,5 +41,5 @@ order by price desc
 limit 3;
 -- Q10) Show customer full names as a single column 'customer_name'
 --      in the format "Last, First".
-select 
+select concat(last_name, ' ', first_name) as customer_name from customers;
 
